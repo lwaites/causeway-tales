@@ -1,0 +1,255 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="description" content="Legends, laws, and the occasional heroics of Essex, Massachusetts.">
+<style>:root{color-scheme:light;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style>
+<title>Causeway Tales</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Alfa+Slab+One&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,600;1,6..72,400;1,6..72,500&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: a single reading column down a tidal channel; each story is a numbered buoy on the chart, red nun or green can. */
+:root {
+  --paper: #ECF0EC;      /* marsh fog */
+  --ink: #142B27;        /* tidal channel */
+  --muted: #56685F;      /* salt-hay */
+  --rule: #C5CFC8;
+  --nun: #B23A2B;        /* red channel marker */
+  --can: #2F6B4F;        /* green channel marker */
+  --ochre: #A87A22;      /* marsh grass in November */
+  --card: #F6F8F5;
+  --display: "Alfa Slab One", "Rockwell", "Roboto Slab", Georgia, serif;
+  --body: "Newsreader", "Iowan Old Style", Georgia, serif;
+  --mono: "IBM Plex Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --paper: #0F1A18; --ink: #E2E8E2; --muted: #93A59B; --rule: #2A3A36;
+    --nun: #E0705F; --can: #6FB48F; --ochre: #D9AE55; --card: #152320;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --paper: #0F1A18; --ink: #E2E8E2; --muted: #93A59B; --rule: #2A3A36;
+  --nun: #E0705F; --can: #6FB48F; --ochre: #D9AE55; --card: #152320;
+  color-scheme: dark;
+}
+
+* { box-sizing: border-box; }
+body {
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--body);
+  font-size: 1.125rem;
+  line-height: 1.65;
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+}
+.wrap { max-width: 40rem; margin: 0 auto; }
+
+/* Masthead */
+header.mast {
+  padding-block: 3.5rem 2rem;
+  border-bottom: 3px double var(--rule);
+  display: grid;
+  gap: 0.75rem;
+}
+.eyebrow, .meta, .toc .when, .sig {
+  font-family: var(--mono);
+  font-size: 0.75rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+h1 {
+  font-family: var(--display);
+  font-weight: 400;
+  font-size: clamp(2.75rem, 10vw, 4.5rem);
+  line-height: 0.95;
+  margin: 0;
+  letter-spacing: 0.01em;
+  text-wrap: balance;
+}
+.dek {
+  font-style: italic;
+  font-size: 1.25rem;
+  color: var(--muted);
+  margin: 0;
+  max-width: 32rem;
+}
+
+/* Chart of contents */
+nav.toc { padding-block: 2rem; border-bottom: 1px solid var(--rule); }
+nav.toc h2 {
+  font-family: var(--mono); font-weight: 500; font-size: 0.75rem;
+  letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted);
+  margin: 0 0 1rem;
+}
+nav.toc ol { list-style: none; margin: 0; padding: 0; display: grid; gap: 0; position: relative; }
+nav.toc ol::before {
+  content: ""; position: absolute; left: 0.85rem; top: 0.9rem; bottom: 0.9rem;
+  border-left: 2px dotted var(--rule);
+}
+nav.toc li a {
+  display: grid; grid-template-columns: 1.75rem 1fr; gap: 0.9rem; align-items: start;
+  padding-block: 0.6rem; color: inherit; text-decoration: none; position: relative;
+}
+nav.toc li a:hover .t, nav.toc li a:focus-visible .t { text-decoration: underline; text-decoration-color: var(--ochre); text-underline-offset: 3px; }
+nav.toc li a:focus-visible { outline: 2px solid var(--ochre); outline-offset: 2px; border-radius: 2px; }
+.toc .t { font-family: var(--display); font-size: 1.2rem; line-height: 1.2; display: block; }
+.toc .txt { min-width: 0; display: grid; gap: 0.15rem; }
+
+/* Channel markers */
+.buoy {
+  width: 1.75rem; height: 1.75rem; display: grid; place-items: center;
+  font-family: var(--mono); font-size: 0.7rem; font-weight: 500; color: var(--paper);
+  position: relative; z-index: 1;
+}
+.buoy.nun { background: var(--nun); clip-path: polygon(50% 0, 100% 100%, 0 100%); padding-top: 0.35rem; }
+.buoy.can { background: var(--can); border-radius: 2px; }
+
+/* Stories */
+article { padding-block: 3rem; border-bottom: 1px solid var(--rule); scroll-margin-top: 1rem; }
+article header { display: grid; gap: 0.6rem; margin-bottom: 1.5rem; }
+.meta { display: flex; flex-wrap: wrap; align-items: center; gap: 0.5rem 0.9rem; }
+.meta .buoy { width: 1.4rem; height: 1.4rem; font-size: 0.6rem; }
+.tag { color: var(--ochre); }
+article h2 {
+  font-family: var(--display); font-weight: 400;
+  font-size: clamp(1.9rem, 6vw, 2.6rem); line-height: 1.05; margin: 0; text-wrap: balance;
+}
+article p { margin: 0 0 1.1rem; }
+article .lede::first-letter {
+  font-family: var(--display); float: left; font-size: 3.6rem; line-height: 0.85;
+  padding: 0.3rem 0.5rem 0 0; color: var(--ochre);
+}
+.thought { font-style: italic; padding-left: 1rem; border-left: 2px solid var(--rule); color: var(--muted); }
+.sign {
+  font-family: var(--display); letter-spacing: 0.12em; color: var(--can);
+}
+blockquote.pull {
+  margin: 2rem 0; padding: 0;
+  font-family: var(--display); font-size: clamp(1.6rem, 5.5vw, 2.2rem); line-height: 1.1;
+  color: var(--nun); text-wrap: balance;
+}
+blockquote.pull cite { display: block; margin-top: 0.6rem; font-family: var(--mono); font-style: normal; font-size: 0.75rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); }
+.break { text-align: center; color: var(--ochre); letter-spacing: 1em; margin: 1.75rem 0; font-family: var(--mono); }
+
+.statute {
+  background: var(--card); border: 1px solid var(--rule); padding: 1.25rem 1.25rem 0.25rem;
+  margin: 1.5rem 0;
+}
+.statute .sig { display: block; margin-bottom: 0.5rem; color: var(--ochre); }
+
+footer { padding-block: 2.5rem 4rem; color: var(--muted); font-size: 0.95rem; }
+footer p { margin: 0 0 0.5rem; }
+
+@media (prefers-reduced-motion: no-preference) {
+  html { scroll-behavior: smooth; }
+}
+</style>
+</head>
+<body>
+
+<div class="wrap">
+  <header class="mast">
+    <span class="eyebrow">Essex, Massachusetts &middot; Inc. 1819 &middot; Cape Ann</span>
+    <h1>Causeway Tales</h1>
+    <p class="dek">Legends, laws, and the occasional heroics of a small shipbuilding town on the Essex River.</p>
+  </header>
+
+  <nav class="toc" aria-labelledby="toc-h">
+    <h2 id="toc-h">On the chart, oldest first</h2>
+    <ol>
+      <li><a href="#john-bishop"><span class="buoy can">1</span><span class="txt"><span class="t">The Legend of John Bishop</span><span class="when">Pre-revolutionary &middot; Legend</span></span></a></li>
+      <li><a href="#loyds-compromise"><span class="buoy nun">2</span><span class="txt"><span class="t">Loyd&rsquo;s Compromise</span><span class="when">Long ago &middot; Town law</span></span></a></li>
+      <li><a href="#conomo-rescue"><span class="buoy can">3</span><span class="txt"><span class="t">The Rescue off Conomo Point</span><span class="when">July 2026 &middot; Heroics</span></span></a></li>
+      <li><a href="#als-benefit"><span class="buoy nun">4</span><span class="txt"><span class="t">The Sons of Essex Save the Benefit</span><span class="when">November 2026 &middot; Heroics</span></span></a></li>
+    </ol>
+  </nav>
+
+  <article id="john-bishop">
+    <header>
+      <div class="meta"><span class="buoy can">1</span><span class="tag">Legend</span><span>Pre-revolutionary</span><span>Scout land reserve</span></div>
+      <h2>The Legend of John Bishop</h2>
+    </header>
+    <p class="lede">According to local legend, deep within the forest at the scout land reserve lies the pre-revolutionary burial ground of a man named John Bishop. Bishop was taken from his family by the brutal elements and weather of uncolonized America. His body was abandoned beneath the snow, frozen with a face of twisted terror, until his mourning family found him in the thaw.</p>
+    <p>But it was not until they found his body that they truly understood the horror that befell his soul.</p>
+    <p>As John Bishop lay dying in frostbitten desperation, it is said, he went insane. The wind began to form itself into a whispering voice, and the voice told him to do horrible things to survive. The body of his horse was found torn open and gutted, with bite marks from human teeth on its throat. Beside it was the cab driver, tied to a nearby tree, his face locked in a scream from being eaten alive.</p>
+    <p>It is said that on quiet nights at the scout land reserve you can hear the horse and the cabbie crying out in pain, and the gluttonous sounds of John Bishop devouring them.</p>
+    <p>His body is buried beneath a pile of stones, weighing the remains of his cursed body to the ground. Offerings of food are still left at his gravesite deep in the woods. Without them, it is said, John Bishop will visit the campsite in search of&hellip; something to eat.</p>
+    <p>Several well-respected investigations of the activity have taken place. Beneath their classic pear logo, one was led by a group calling themselves &ldquo;the Son of John.&rdquo; Famous medium Christophere Write and paranormal investigator Nicholette Lafete found incontrovertible evidence to prove the legend and posted it online. When pushed to display it to the public, they responded only:</p>
+    <blockquote class="pull">&ldquo;It&rsquo;s gone now.&rdquo;<cite>The Son of John, on the evidence</cite></blockquote>
+  </article>
+
+  <article id="loyds-compromise">
+    <header>
+      <div class="meta"><span class="buoy nun">2</span><span class="tag">Town law</span><span>Date unknown</span><span>Still in force</span></div>
+      <h2>Loyd&rsquo;s Compromise</h2>
+    </header>
+    <p class="lede">There is one Essex law that citizens are especially fond of. Long ago there was a great duel that never happened, and it resulted in what is known today as Loyd&rsquo;s Compromise. The law is named after the great Dr. Loyd Hoyt the Third, first of his kind.</p>
+    <div class="statute">
+      <span class="sig">The Compromise, in plain terms</span>
+      <p>The amount of taxes one is required to pay is directly correlated to the number of goats one keeps on one&rsquo;s property.</p>
+    </div>
+    <p>Many citizens have taken full advantage of this benefit, which gives them the unique ability to have their house double as a doomsday shelter.</p>
+  </article>
+
+  <article id="conomo-rescue">
+    <header>
+      <div class="meta"><span class="buoy can">3</span><span class="tag">Heroics</span><span>July 2026</span><span>Conomo Point &middot; Essex River</span></div>
+      <h2>The Rescue off Conomo Point</h2>
+    </header>
+    <p class="lede">In the summer of 2026, a daring rescue was staged by several good ole&rsquo; Essex boys. Off the edge of Conomo Point, a group of young students nearly met a tragic end when they fell out of their boat following several irresponsible antics. The only memento of their presence was a single Michelob Ultra, perfectly balanced atop the center console as the boat spun furiously out of control.</p>
+    <p>Cory Burnham and Cory McCollum were on a fishing trip along the Essex River with Christophere Write when they witnessed the scene. With decades of combined boating and river experience among them, the crew knew to call out and keep the youngsters a safe distance from the boat, which was now spinning violently in donuts across the choppy salt water. Moments before the youngest boy was nearly sliced to bits by the propeller, he followed the voices of his new heroes and swam back to safety.</p>
+    <p>As they prepared to shed their own possessions to save the young men and their boat, a single figure broke over the horizon. Appearing in the sunset like a cowboy riding to the rescue, barrel-chested like a Clydesdale, shirtless, and wielding an anchor line high above his head, Wally Mears called out:</p>
+    <blockquote class="pull">&ldquo;WE NEED A ROPE!&rdquo;<cite>Wally Mears</cite></blockquote>
+    <p>Lassoing the motor to slow it down, the crew wrangled the wild machine like an untamable sea beast before easing the throttle down with a calming &ldquo;Whoa, fella.&rdquo;</p>
+    <p>Wally Mears grabbed each of the young boys and pulled them aboard with a single arm. It seemed only a blink of an eye before he appeared back at the dock, the Michelob Ultra still standing, balanced as it had always been. And so was commemorated another adventure of the Essex Eagles.</p>
+  </article>
+
+  <article id="als-benefit">
+    <header>
+      <div class="meta"><span class="buoy nun">4</span><span class="tag">Heroics</span><span>November 2026</span><span>Centennial Grove</span></div>
+      <h2>The Sons of Essex Save the Benefit</h2>
+    </header>
+    <p class="lede">On a cool November afternoon in Essex, the rain poured. And poured. And poured. Chilling sleet and heavy raindrops pounded deafeningly on the rooftops all around the lakeside town.</p>
+    <p>In the window of one of those houses, Nate Woodman looked out over the mist and fog. It covered the town he loved so much in a mix of apprehension and doubt.</p>
+    <p class="thought">The fundraiser. How will we support all those with ALS in need if people don&rsquo;t come to the fundraiser?</p>
+    <p>He swallowed hard. His vision of live bands playing lakeside, lit only by string lights, was starting to fade. The firepits he had planned would all be put out. In his heart he knew that the town landmark of Centennial Grove, once filled with basketball courts and summer activities, would be reduced to little more than a puddle. He had one option. One group to call.</p>
+    <p><strong>The Sons of Essex.</strong></p>
+    <p>&ldquo;Cory!&rdquo; he said into the phone. &ldquo;Yes, both of you. I need your help!&rdquo;</p>
+    <p>Within minutes a small army of able-bodied men had assembled at the building that bore Nate&rsquo;s name: Woodman&rsquo;s Restaurant.</p>
+    <p>&ldquo;We&rsquo;re here to help!&rdquo;</p>
+    <p>The raw, dreary cold was working into his bones, but his heart began to keep him warm.</p>
+    <p>An engine revved from the Woodman&rsquo;s truck. It was Wesley &ldquo;Snipes&rdquo; Cannon, who had just finished his taxes. As the Sons of Essex piled in, he called out, &ldquo;Come on, boys, let&rsquo;s go save the day!&rdquo;</p>
+
+    <div class="break" aria-hidden="true">~~~</div>
+
+    <p>At the grove, a single sunbeam broke through the clouds and lit up the side of a truck: <span class="sign">MEYER TREE</span>. David Meyer stepped out, his steel-toed boots sloshing in the mud riddling the once beautiful park. He nodded to himself. &ldquo;I have a fix for this.&rdquo;</p>
+    <p>He reached in to lower the bed of his truck. &ldquo;Boys, we&rsquo;re going to need a rake.&rdquo;</p>
+    <p>A pile of mulch was poured across the mud, but again it was the Sons of Essex who saved the day. Each with a rake in hand, they spread the mulch to cover the mud, and it rapidly became a full road.</p>
+    <p>And where there&rsquo;s a road, there comes industry: trucks from the local brewers, bands, and bread. Oh, so much bread. Piles and cornucopias of bagels and rolls and pretzels stacked atop an endless bounty of food.</p>
+    <p>But still the water flowed. From atop the mulch-covered hill, Steven Woodman looked out with a plan. And he made a call.</p>
+    <p>&ldquo;Hey, Jack? That you? Jack Hoffman of Porcupine Creek, notably featured in season one of <i>Gold Rush: Alaska</i>? Yeah, it&rsquo;s me, Steve. I need a favor.&rdquo;</p>
+    <p>The smell of gasoline and the rumble of a pump filled the air. The parking lot below, which had slowly flooded into a small pond, began to disappear. What was once an apocalyptic flood shrank to a splash that couldn&rsquo;t wet a child&rsquo;s shoe.</p>
+    <p>One piece was left: the pride at the center of the display. Christophere Write looked up at the top of the pavilion, at the empty post in need of a flag.</p>
+    <p>&ldquo;Eh, I do this at work all the time.&rdquo;</p>
+    <p>Running up the ladder like a saint walking on water, hanging hundreds of feet in the air, Christophere was in his element.</p>
+    <p>Wesley Snipes could only look on in amazement as Christophere hung from a beam with one hand and pinned up the flag with the other. &ldquo;Be careful up there!&rdquo;</p>
+    <p>Christophere could barely hear him from up there. With a single swing he landed gracefully on the banister, the bright American flag waving majestically behind him.</p>
+    <p>And at that moment, the rain stopped. At last, the party began.</p>
+    <p>The fires were lit, and crowds began to gather. It wasn&rsquo;t just the Sons of Essex. The daughters and the fathers and the mothers and all the families of Essex appeared.</p>
+    <p>The band began to play, lit by the string lights, and Nate&rsquo;s vision came true before his eyes: a true community effort, coming together in a time of joy to help the sick.</p>
+    <blockquote class="pull">And all thanks to the Sons of Essex.</blockquote>
+  </article>
+
+  <footer>
+    <p>Collected from the people who were there, or who say they were.</p>
+    <p class="sig">Red nuns and green cans mark the channel. Keep red on your right returning up the river.</p>
+  </footer>
+</div>
+</body>
+</html>
